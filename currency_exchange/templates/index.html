@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block body_block %}
+
+<div class="container">
+  <div class="jumbotron">
+    <h1>Crown Stack Code Challenge!</h1>
+        <form method="POST" action="{% url 'getrate' %}">
+          {% csrf_token %}
+          <label>List of Currencies : <label>
+          <select name="drop" style="width: 160px; height:28px;">
+              {% for i in currency_list %}
+              {% if i == sel_cur %}
+              <option value="{{ i }}" selected>{{ i }}</option>
+              {% else %}
+              <option value="{{ i }}">{{ i }}</option>
+              {% endif %}
+              
+              {% endfor %}
+          </select>
+          <input type="submit" name="" value="Get Xchange">
+        </form>
+  </div>
+  {% if res %}
+    <div class="jumbotron"> 
+      <table class="table" style="font-weight: bold;">
+        <tbody>
+        {% for key, values in res.items %}
+        <tr>
+          <td>{{key}}</td>
+          <td>{{values}}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      </table>
+    </div>
+  {% endif %}
+</div>
+{% endblock %}
